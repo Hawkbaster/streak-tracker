@@ -2,10 +2,48 @@
 <html>
 <head>
     <title>Streak Tracker</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 15px 25px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 12px;
+            background: #22c55e;
+            color: white;
+            width: 90%;
+            max-width: 300px;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+    </style>
 </head>
 <body>
     <h1>🔥 Streak Tracker</h1>
-
+    <p>Steps: {{ steps }}</p>
     <p>Current streak: {{ streak }}</p>
     <p>Last check-in: {{ last_date }}</p>
 

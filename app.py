@@ -13,6 +13,7 @@ def home():
     return render_template(
         "index.html",
         streak=data["streak"],
+        steps=data["steps"],
         last_date=data["last_date"]
     )
 
@@ -21,23 +22,30 @@ def checkin():
     today = str(date.today())
     data = db.get_data()
 
-    if data["last_date"] == today:
-        return redirect("/")
-
     streak = data["streak"]
+    steps = data["steps"]
     last_date = data["last_date"]
 
-    if last_date:
-        last = date.fromisoformat(last_date)
+    # 🔥 ВСЕГДА +1 шаг
+    steps += 1
 
-        if (date.today() - last).days == 1:
-            streak += 1
+    # 🧠 проверяем streak только если это новый день
+    if last_date != today:
+
+        if last_date:
+            last = date.fromisoformat(last_date)
+
+            if (date.today() - last).days == 1:
+                streak += 1
+            else:
+                streak = 1
         else:
             streak = 1
-    else:
-        streak = 1
 
-    db.update_data(streak, today)
+        # обновляем дату только если новый день
+        last_date = today
+
+    db.update_data(streak, steps, last_date)
 
     return redirect("/")
 
