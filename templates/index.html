@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Streak Tracker</title>
 </head>
 <body>
+    <h1>🔥 Streak Tracker</h1>
 
+    <p>Current streak: {{ streak }}</p>
+    <p>Last check-in: {{ last_date }}</p>
+
+    <form method="POST" action="/checkin">
+        <button type="submit">I did it today</button>
+    </form>
 </body>
 </html>
