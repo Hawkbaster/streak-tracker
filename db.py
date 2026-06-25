@@ -32,3 +32,31 @@ def init_db():
 
     conn.commit()
     conn.close()
+
+def get_data():
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("SELECT streak, last_date, steps FROM streak WHERE id = 1")
+    row = c.fetchone()
+
+    conn.close()
+
+    return {
+        "streak": row[0],
+        "last_date": row[1],
+        "steps": row[2]
+    }
+
+def update_data(streak, steps, last_date):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("""
+        UPDATE streak
+        SET streak = ?, steps = ?, last_date = ?
+        WHERE id = 1
+    """, (streak, steps, last_date))
+
+    conn.commit()
+    conn.close()
