@@ -69,6 +69,17 @@
         button:active {
             transform: scale(0.98); /* эффект нажатия */
         }
+        .cell {
+            position: relative; /* чтобы рыцарь мог позиционироваться внутри клетки */
+        }
+
+        .player {
+            position: absolute; /* фиксируем внутри клетки */
+            top: 50%; /* по вертикали центр */
+            left: 50%; /* по горизонтали центр */
+            transform: translate(-50%, -50%); /* идеальное центрирование */
+            font-size: 14px; /* размер рыцаря */
+        }
     </style>
 </head>
 
@@ -84,9 +95,13 @@
 
     <!-- сетка -->
     <div class="grid">
-        {% for i in range(1, 101) %} <!-- создаём 100 клеток -->
-            <div class="cell {% if i <= progress %}active{% endif %}"></div> <!-- активные клетки -->
-        {% endfor %}
+    {% for i in range(1, 101) %}
+        <div class="cell {% if i <= progress %}active{% endif %}" data-index="{{ i }}">
+            {% if i == progress %}
+                <div class="player">🗡️</div>
+            {% endif %}
+        </div>
+    {% endfor %}
     </div>
 
     <!-- кнопка +1 -->
