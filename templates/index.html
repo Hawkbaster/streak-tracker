@@ -1,84 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Step Grid</title>
+    <title>Step Tracker</title> <!-- заголовок вкладки -->
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- адаптация под телефон -->
 
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: #0f172a;
-            color: white;
-            text-align: center;
+            font-family: Arial, sans-serif; /* шрифт */
+            margin: 0; /* убираем отступы */
+            padding: 20px; /* внутренние отступы */
+            background: #0f172a; /* тёмный фон */
+            color: white; /* белый текст */
+            text-align: center; /* центрируем всё */
         }
 
-        h1 {
-            font-size: 26px;
-            margin-bottom: 15px;
+        .top-bar {
+            display: flex; /* делаем строку */
+            justify-content: space-between; /* раздвигаем по краям */
+            align-items: center; /* выравниваем по вертикали */
+            margin-bottom: 15px; /* отступ снизу */
+        }
+
+        a {
+            color: #38bdf8; /* цвет ссылок */
+            text-decoration: none; /* убираем подчёркивание */
         }
 
         .grid {
-            display: grid;
-            grid-template-columns: repeat(10, 1fr);
-            gap: 5px;
-            max-width: 350px;
-            margin: 20px auto;
+            display: grid; /* сетка */
+            grid-template-columns: repeat(10, 1fr); /* 10 колонок */
+            gap: 5px; /* расстояние между клетками */
+            max-width: 350px; /* ограничение ширины */
+            margin: 20px auto; /* центрирование */
         }
 
         .cell {
-            width: 100%;
-            aspect-ratio: 1;
-            background: #1e293b;
-            border-radius: 6px;
+            width: 100%; /* ширина клетки */
+            aspect-ratio: 1; /* квадрат */
+            background: #1e293b; /* серый цвет */
+            border-radius: 6px; /* скругление */
         }
 
         .cell.active {
-            background: #22c55e;
+            background: #22c55e; /* зелёный если активен */
         }
 
         button {
-            font-size: 18px;
-            padding: 14px;
-            margin-top: 15px;
-            border: none;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 300px;
+            font-size: 18px; /* размер текста */
+            padding: 14px; /* внутренний отступ */
+            margin-top: 15px; /* отступ сверху */
+            border: none; /* убираем рамку */
+            border-radius: 12px; /* скругление */
+            width: 90%; /* ширина */
+            max-width: 300px; /* максимум */
         }
 
         .step-btn {
-            background: #22c55e;
-            color: white;
+            background: #22c55e; /* зелёная кнопка */
+            color: white; /* белый текст */
         }
 
         .reset-btn {
-            background: #ef4444;
-            color: white;
+            background: #ef4444; /* красная кнопка */
+            color: white; /* белый текст */
         }
 
         button:active {
-            transform: scale(0.98);
+            transform: scale(0.98); /* эффект нажатия */
         }
     </style>
 </head>
 
 <body>
 
-    <h1>🔥 Step Tracker Grid</h1>
+    <!-- верхняя панель -->
+    <div class="top-bar">
+        <div>🔥 Step Tracker</div> <!-- название -->
+        <div>
+            <a href="/logout">Logout</a> <!-- кнопка выхода -->
+        </div>
+    </div>
 
+    <!-- сетка -->
     <div class="grid">
-        {% for i in range(1, 101) %}
-            <div class="cell {% if i <= progress %}active{% endif %}"></div>
+        {% for i in range(1, 101) %} <!-- создаём 100 клеток -->
+            <div class="cell {% if i <= progress %}active{% endif %}"></div> <!-- активные клетки -->
         {% endfor %}
     </div>
 
+    <!-- кнопка +1 -->
     <form method="POST" action="/step">
         <button class="step-btn" type="submit">+1 Step</button>
     </form>
 
+    <!-- кнопка reset -->
     <form method="POST" action="/reset">
         <button class="reset-btn" type="submit">Reset Progress</button>
     </form>

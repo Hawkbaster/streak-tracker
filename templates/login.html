@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 350px;
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #0f172a;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #22c55e;
+            color: white;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        a {
+            display: block;
+            margin-top: 15px;
+            color: #38bdf8;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>🔐 Login</h1>
+
+    <form method="POST">
+        <input name="username" placeholder="Username">
+        <input name="password" type="password" placeholder="Password">
+        <button type="submit">Login</button>
+    </form>
+
+    <a href="/register">Create account</a>
+
+</div>
+
+</body>
+</html>
