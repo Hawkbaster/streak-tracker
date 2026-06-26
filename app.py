@@ -1,10 +1,10 @@
-from flask import Flask, render_template, request, redirect
-from datetime import date
+from flask import Flask, render_template, redirect
 import db
 
 app = Flask(__name__)
 
 db.init_db()
+
 
 @app.route("/")
 def home():
@@ -12,42 +12,37 @@ def home():
 
     return render_template(
         "index.html",
-        streak=data["streak"],
-        steps=data["steps"],
-        last_date=data["last_date"]
+        progress=data["progress"],
+        total_steps=data["total_steps"]
     )
 
-@app.route("/checkin", methods=["POST"])
-def checkin():
-    today = str(date.today())
+
+@app.route("/step", methods=["POST"])
+def step():
     data = db.get_data()
 
-    streak = data["streak"]
-    steps = data["steps"]
-    last_date = data["last_date"]
+    progress = data["progress"] + 1
+    total_steps = data["total_steps"] + 1
 
-    # 🔥 ВСЕГДА +1 шаг
-    steps += 1
+    if progress > 100:
+        progress = 1
 
-    # 🧠 проверяем streak только если это новый день
-    if last_date != today:
-
-        if last_date:
-            last = date.fromisoformat(last_date)
-
-            if (date.today() - last).days == 1:
-                streak += 1
-            else:
-                streak = 1
-        else:
-            streak = 1
-
-        # обновляем дату только если новый день
-        last_date = today
-
-    db.update_data(streak, steps, last_date)
+    db.update_data(progress, total_steps)
 
     return redirect("/")
+
+
+@app.route("/reset", methods=["POST"])
+def reset():
+    data = db.get_data()
+
+    db.update_data(
+        0,
+        data["total_steps"]
+    )
+
+    return redirect("/")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
