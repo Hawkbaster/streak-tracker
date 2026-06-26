@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Streak Tracker</title>
+    <title>Step Grid</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -16,24 +16,47 @@
         }
 
         h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
+            font-size: 26px;
+            margin-bottom: 15px;
         }
 
-        p {
-            font-size: 18px;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 5px;
+            max-width: 350px;
+            margin: 20px auto;
+        }
+
+        .cell {
+            width: 100%;
+            aspect-ratio: 1;
+            background: #1e293b;
+            border-radius: 6px;
+        }
+
+        .cell.active {
+            background: #22c55e;
         }
 
         button {
-            font-size: 20px;
-            padding: 15px 25px;
-            margin-top: 20px;
+            font-size: 18px;
+            padding: 14px;
+            margin-top: 15px;
             border: none;
             border-radius: 12px;
-            background: #22c55e;
-            color: white;
             width: 90%;
             max-width: 300px;
+        }
+
+        .step-btn {
+            background: #22c55e;
+            color: white;
+        }
+
+        .reset-btn {
+            background: #ef4444;
+            color: white;
         }
 
         button:active {
@@ -41,14 +64,24 @@
         }
     </style>
 </head>
-<body>
-    <h1>🔥 Streak Tracker</h1>
-    <p>Steps: {{ steps }}</p>
-    <p>Current streak: {{ streak }}</p>
-    <p>Last check-in: {{ last_date }}</p>
 
-    <form method="POST" action="/checkin">
-        <button type="submit">I did it today</button>
+<body>
+
+    <h1>🔥 Step Tracker Grid</h1>
+
+    <div class="grid">
+        {% for i in range(1, 101) %}
+            <div class="cell {% if i <= progress %}active{% endif %}"></div>
+        {% endfor %}
+    </div>
+
+    <form method="POST" action="/step">
+        <button class="step-btn" type="submit">+1 Step</button>
     </form>
+
+    <form method="POST" action="/reset">
+        <button class="reset-btn" type="submit">Reset Progress</button>
+    </form>
+
 </body>
 </html>

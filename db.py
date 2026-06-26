@@ -1,62 +1,61 @@
 import sqlite3
-from datetime import date
 
 DB_NAME = "streak.db"
+
 
 def init_db():
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
     c.execute("""
-        CREATE TABLE IF NOT EXISTS streak (
+        CREATE TABLE IF NOT EXISTS progress (
             id INTEGER PRIMARY KEY,
-            streak INTEGER,
-            last_date TEXT,
-            steps INTEGER
+            progress INTEGER,
+            total_steps INTEGER
         )
     """)
 
-    # 🔥 добавляем steps если его нет
-    c.execute("PRAGMA table_info(streak)")
-    columns = [col[1] for col in c.fetchall()]
+    c.execute("SELECT * FROM progress WHERE id = 1")
 
-    if "steps" not in columns:
-        c.execute("ALTER TABLE streak ADD COLUMN steps INTEGER DEFAULT 0")
-
-    c.execute("SELECT * FROM streak WHERE id = 1")
     if not c.fetchone():
         c.execute("""
-            INSERT INTO streak (id, streak, last_date, steps)
-            VALUES (1, 0, NULL, 0)
+            INSERT INTO progress (id, progress, total_steps)
+            VALUES (1, 0, 0)
         """)
 
     conn.commit()
     conn.close()
 
+
 def get_data():
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
-    c.execute("SELECT streak, last_date, steps FROM streak WHERE id = 1")
+    c.execute("""
+        SELECT progress, total_steps
+        FROM progress
+        WHERE id = 1
+    """)
+
     row = c.fetchone()
 
     conn.close()
 
     return {
-        "streak": row[0],
-        "last_date": row[1],
-        "steps": row[2]
+        "progress": row[0],
+        "total_steps": row[1]
     }
 
-def update_data(streak, steps, last_date):
+
+def update_data(progress, total_steps):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
     c.execute("""
-        UPDATE streak
-        SET streak = ?, steps = ?, last_date = ?
+        UPDATE progress
+        SET progress = ?, total_steps = ?
         WHERE id = 1
-    """, (streak, steps, last_date))
+    """, (progress, total_steps))
 
     conn.commit()
     conn.close()
